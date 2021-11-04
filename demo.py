@@ -1,9 +1,10 @@
 import random
+import sys
 
 from highscore import HighScore
 
-
-hs = HighScore("lunarlander")
+debug = len(sys.argv) > 1 and sys.argv[1] == 'debug'
+hs = HighScore("lunarlander", debug=debug)
 score = random.randint(0, 100)
 rank = hs.add_highscore("Mark", score)
 if rank > 0:

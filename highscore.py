@@ -1,35 +1,34 @@
 import requests
+from requests_toolbelt.utils import dump
 
 
-class HighSCoreException(Exception):
+class HighScoreException(Exception):
     pass
 
 
-def requester(func):
-    def inner_function(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except requests.exceptions.ConnectionError:
-            raise HighSCoreException(f"Could not connect to HighScore server")
-    return inner_function
-
-
 class HighScore:
-    def __init__(self, game, server_url="http://127.0.0.1:5000"):
+    def __init__(self, game, server_url="http://127.0.0.1:8080", debug=False):
         self.game = game
         self.server_url = server_url
+        self.debug = debug
 
-    @requester
     def add_highscore(self, scorer, score):
-        url = self.server_url + "/highscores/" + self.game
+        uri = "/highscores/" + self.game
         score = {"name": scorer, "score": int(score)}
-        resp = requests.post(url=url, json=score)
-        json = resp.json()
+        json = self.__handle_request(requests.post, uri, json=score)
         return json["score_rank"]
 
-    @requester
     def get_highscores(self):
-        url = self.server_url + "/highscores/" + self.game
-        resp = requests.get(url=url)
-        json = resp.json()
+        uri = "/highscores/" + self.game
+        json = self.__handle_request(requests.get, uri)
         return json["scores"]
+
+    def __handle_request(self, requests_function, uri, json=None):
+        url = self.server_url + uri
+        try:
+            resp = requests_function(url=url, json=json)
+        except requests.exceptions.ConnectionError:
+            raise HighScoreException(f"Could not connect to HighScore server at {self.server_url}")
+        if self.debug:
+            print(dump.dump_all(resp).decode('utf-8'))
+        return resp.json()

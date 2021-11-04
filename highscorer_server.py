@@ -1,4 +1,5 @@
 import json
+import sys
 
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
@@ -43,8 +44,7 @@ class GamesList(HighScoreResource):
     def get(self):
         if keys := self._get_data().keys():
             return list(keys)
-        else:
-            return []
+        return []
 
 
 class HighScores(HighScoreResource):
@@ -57,7 +57,7 @@ class HighScores(HighScoreResource):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, help="Name of the player that scored")
         parser.add_argument('score', type=int, help="Score put down by this player")
-        args = parser.parse_args()
+        params = parser.parse_args()
 
         # Add game if it was new
         highscores = self._get_data()
@@ -66,7 +66,7 @@ class HighScores(HighScoreResource):
 
         # Add the new high score
         scores = highscores[game]
-        new_score = {"name": args["name"], "score": args["score"]}
+        new_score = {"name": params["name"], "score": params["score"]}
         scores.append(new_score)
 
         # Sort the score and cut off at the max
@@ -91,4 +91,11 @@ api.add_resource(GamesList, '/highscores')
 api.add_resource(HighScores, '/highscores/<game>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if len(sys.argv) > 1:
+        args = sys.argv[1].split(":")
+        host = args[0]
+        port = int(args[1])
+    else:
+        host = "0.0.0.0"
+        port = 8080
+    app.run(debug=True, host=host, port=port)
