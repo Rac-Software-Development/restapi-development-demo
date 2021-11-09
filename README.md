@@ -32,10 +32,10 @@ The highscore server takes highscores based on a game name using a REST API appr
 | URI | HTTP Verb | Description | 
 | --- | --- | --- | 
 | /highscores | GET | Lists all games known to the highscore server | 
-| /highscores/<gamename> | GET | Given a <gamename>, retrieve the highscores known for that game. | 
-| /highscores/<gamename> | POST | Expects a <gamename> and a body containing a dictionary with a name and a score, Only the top 10 scores are retained. Return a ranking if the score is in the top 10 (and a list of scores) or a 0 if your score did not make the top 10. | 
+| /highscores/\<gamename\> | GET | Given a \<gamename\>, retrieve the highscores known for that game. | 
+| /highscores/\<gamename\> | POST | Expects a \<gamename\> and a body containing a dictionary with a name and a score, Only the top 10 scores are retained. Return a ranking if the score is in the top 10 (and a list of scores) or a 0 if your score did not make the top 10. | 
 
-The body for the POST / save score method should look like this:
+The body for the POST / save score method should resemble the following structure:
 ```json
 {
     "name": "Mark",
