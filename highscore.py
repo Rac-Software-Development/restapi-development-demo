@@ -2,6 +2,8 @@ import requests
 from requests_toolbelt.utils import dump
 
 
+# I create my own exception type here so I can inform clients when we cannot reach the highscore server.
+# This will probably be a common occurence.
 class HighScoreException(Exception):
     pass
 
@@ -15,11 +17,13 @@ class HighScore:
     def add_highscore(self, scorer, score):
         uri = "/highscores/" + self.game
         score = {"name": scorer, "score": int(score)}
+        # Note that I pass the requests.post method here, not a variable.
         json = self.__handle_request(requests.post, uri, json=score)
         return json["score_rank"]
 
     def get_highscores(self):
         uri = "/highscores/" + self.game
+        # Note that I pass the requests.get method here, not a variable.
         json = self.__handle_request(requests.get, uri)
         return json["scores"]
 

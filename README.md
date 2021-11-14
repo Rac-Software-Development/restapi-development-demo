@@ -1,10 +1,11 @@
 # highscorer
 A python server and client for a simple RESTful API implementation. This is demonstration code, not meant for general usage. 
 
-This RESTful server app has three components to play with: 
+This RESTful server app has a few components to play with: 
 - A REST [server](highscorer_awecwe.py) that registers high scores for a given game name. 
 - A simple [client module](highscore.py) that contacts this server and can be imported in other classes. 
 - A [demo program](demo.py) importing the client and showing how to use it
+- A [demo web page](www/highscore.html) with a fancy star field showing a continually updated list of highscores 
 
 Note that you should start the server before trying to run the demo. 
 
@@ -100,3 +101,8 @@ c:\python demo.py debug
 
 YEAH! 8 SCORE! Ranking 1
 ```
+
+# Demo web page
+The demo page is a fancy scrolling star field (https://github.com/jakesgordon/javascript-starfield/) with a jquery script that keeps polling the highscore server for new scores. 
+
+You can run this page from your web browser directly, no need for a webserver. 

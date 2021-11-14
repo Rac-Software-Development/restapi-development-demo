@@ -19,3 +19,4 @@ urllib3>=1.26.7
 webargs>=8.0.1
 Werkzeug>=2.0.2
 requests_toolbelt>=0.9.1
+flask-cors>=3.0.10
