@@ -45,30 +45,35 @@
     });
 
     const get_scores = async () => {
-        const response = await fetch('http://127.0.0.1:8080/highscores/lunarlander', {
-            method: 'GET',
-            // body: "some body"
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            const response = await fetch('http://127.0.0.1:8080/highscores/lunarlander', {
+                method: 'GET',
+                // body: "some body"
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (response.error) {
+                console.log("Some error with fetching JSON from highscore server")
+            } else if (!response.ok) {
+                console.log("Some non-200 HTTP responmse code")
+            } else {
+                if (data["scores"].length > 0) {
+                    const scorelist = document.getElementById("scorelist")
+                    // Replace children with no content means the node is emptied
+                    scorelist.replaceChildren()
+                    data["scores"].forEach(function (item) {
+                        scorelist.innerHTML +="<dt>" + item["name"] + "</dt><dd>" + item["score"] + "</dd>"
+                    })
+                }
             }
-        });
-        const data = await response.json();
-
-        if (response.error) {
-            console.log("Some error with fetching JSON from highscore server")
-        } else if (!response.ok) {
-            console.log("Some non-200 HTTP responmse code")
-        } else {
-            if (data["scores"].length > 0) {
-                const scorelist = document.getElementById("scorelist")
-                // Replace children with no content means the node is emptied
-                scorelist.replaceChildren()
-                data["scores"].forEach(function (item) {
-                    scorelist.innerHTML +="<dt>" + item["name"] + "</dt><dd>" + item["score"] + "</dd>"
-                })
-            }
+        } catch (e) {
+            console.log("Some error with fetching JSON from highscore server: " + e)
+        } finally {
+            setTimeout(get_scores, 5000)
         }
-        setTimeout(get_scores, 5000)
+
     }
 </script>
 
