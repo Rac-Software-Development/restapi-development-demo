@@ -24,23 +24,24 @@ class HighScoreResource(Resource):
     FILENAME = "highscores.json"
     MAX_SCORES_PER_GAME = 10
 
-    def __init__(self):
-        self.data = None
+    # A global var caches the data.
+    data = None
 
-    def _get_data(self):
-        if not self.data:
+    @staticmethod
+    def _get_data():
+        if not HighScoreResource.data:
             try:
                 with open(HighScoreResource.FILENAME, "r") as jsonfile:
-                    self.data = json.load(jsonfile)
+                    HighScoreResource.data = json.load(jsonfile)
             except FileNotFoundError:
-                self.data = {}
-        return self.data
+                HighScoreResource.data = {}
+        return HighScoreResource.data
 
-    def _write_data(self, json_dict):
-        if json_dict != self.data:
-            with open(HighScoreResource.FILENAME, 'w') as jsonfile:
-                json.dump(json_dict, jsonfile)
-            self.data = json_dict
+    @staticmethod
+    def _write_data(json_dict):
+        with open(HighScoreResource.FILENAME, 'w') as jsonfile:
+            json.dump(json_dict, jsonfile)
+        HighScoreResource.data = json_dict
 
 
 class GamesList(HighScoreResource):
