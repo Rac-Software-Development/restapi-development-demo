@@ -103,6 +103,8 @@ YEAH! 8 SCORE! Ranking 1
 ```
 
 # Demo web page
-The demo page is a fancy scrolling star field (https://github.com/jakesgordon/javascript-starfield/) with a jquery script that keeps polling the highscore server for new scores. 
+The demo page is a fancy scrolling star field (https://github.com/jakesgordon/javascript-starfield/) with a list of highscores. There are 2 variants:
+- A Jquery based approach 
+- An ES2017-ES2020 pure javascript variant
 
 You can run this page from your web browser directly, no need for a webserver. 

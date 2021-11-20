@@ -126,7 +126,9 @@ class HighScores(HighScoreResource):
 # You'll run into this if you connect to REST URLs directly from a web page. If you do
 # not add the CORS header, the following error will appear in your browser log:
 # "Cross-Origin Request Blocked: The Same Origin Policy disallows..." etc etc
-cors = CORS(app, resources={r"/highscores/*": {"origins": "*"}})
+
+
+CORS(app, resources={r"/highscores/*": {"origins": "*"}})
 
 # Here we are mapping two URLs to two different objects
 api.add_resource(GamesList, '/highscores')
