@@ -36,7 +36,10 @@
 <div id="container">
     <canvas id="stars"></canvas>
     <div id="overlay">HIGHSCORES:
-        <dl id="scorelist"></dl>
+        <dl id="scorelist">
+            <dt>Mark</dt><dd>100.000</dd>
+            <dt>Robert</dt><dd>1</dd>
+        </dl>
     </div>
 </div>
 <script type="text/javascript">
@@ -44,31 +47,8 @@
         Game.start('stars', Stars);
     });
 
-    $(function () {
-        // We run this method when the page is done loading
-        set_scores()
-    })
-
-    // This method calls itself using "setTimeout" when it's done executing
-    function set_scores() {
-        // Try to retrieve the highscores from a server running on my own machine
-        $.get("http://127.0.0.1:8080/highscores/lunarlander", function (data) {
-            let scorelist = $("#scorelist")
-            scorelist.empty()
-            // This REST call returns { "scores":[]} if there are no highscores for this game
-            if (data["scores"].length > 0) {
-                data["scores"].forEach(function (item) {
-                    scorelist.append("<dt>" + item["name"] + "</dt><dd>" + item["score"] + "</dd>")
-                })
-            }
-        })
-        .fail(function () {
-            console.log("Highscore Request failed :(")
-        })
-        .always(function () {
-            setTimeout(get_scores, 5000)
-        });
-    }
+    // 1) Overwrite static scores using for...of
+    // 2) Fetch lunarlander scores from server using $.get
 </script>
 
 </body>

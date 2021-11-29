@@ -5,6 +5,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -129,16 +130,20 @@ class HighScores(HighScoreResource):
 # "Cross-Origin Request Blocked: The Same Origin Policy disallows..." etc etc
 CORS(app, resources={r"/highscores/*": {"origins": "*"}})
 
+
+if len(sys.argv) > 1:
+    args = sys.argv[1].split(":")
+    host = args[0]
+    port = int(args[1])
+else:
+    host = "127.0.0.1"
+    port = 8080
+
 # Here we are mapping two URLs to two different objects
+print(f"Adding http://{host}:{port}/highscores")
 api.add_resource(GamesList, '/highscores')
+print(f"Adding http://{host}:{port}/highscores/<game name>")
 api.add_resource(HighScores, '/highscores/<game>')
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        args = sys.argv[1].split(":")
-        host = args[0]
-        port = int(args[1])
-    else:
-        host = "0.0.0.0"
-        port = 8080
-    app.run(debug=True, host=host, port=port)
+
+app.run(debug=True, host=host, port=port)
