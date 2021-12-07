@@ -65,8 +65,8 @@ class HighScores(HighScoreResource):
             For a given game, return a dict containing an ordered list of scores. An example output would be:
             {
                  "scores": [
-                      {"name: "Mark", "score": 10},
-                      {"name: "Robert", "score": 8}
+                      {"name": "Mark", "score": 10},
+                      {"name": "Robert", "score": 8}
                 ]
             }
         """

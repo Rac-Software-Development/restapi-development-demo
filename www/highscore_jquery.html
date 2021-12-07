@@ -9,6 +9,12 @@
     <script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
     <! -- https://codeincomplete.com/articles/javascript-starfield/ -->
     <style>
+        body {
+            font-family: monospace, 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono';
+            color: white;
+            font-size: 4em;
+        }
+
         #container {
             position: relative;
         }
@@ -18,9 +24,6 @@
         }
 
         #overlay {
-            font-family: monospace, 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono';
-            color: white;
-            font-size: 4em;
             top: 100px;
             left: 50%;
             transform: translate(-50%, 0);
@@ -30,19 +33,40 @@
             display: grid;
             grid-template-columns: auto auto;
         }
+
+        input, #add_new_score {
+            background-color: transparent;
+            color: white;
+            font-size: 1em;
+            border-radius: 10px;
+            width: 200px;
+        }
+
+        input {
+            border: 0px;
+            border-bottom: 2px solid white;
+
+        }
     </style>
 </head>
 <body>
 <div id="container">
     <canvas id="stars"></canvas>
-    <div id="overlay">HIGHSCORES:
+    <div id="overlay"><h4>HIGHSCORES:</h4>
         <dl id="scorelist"></dl>
+        <h4>ADD NEW HIGHSCORE:</h4>
+        <input id="new_name" autofocus value="Mark">
+        <input id="new_score" value="10">
+        <button id="add_new_score">ADD</button>
     </div>
+
 </div>
 <script type="text/javascript">
     Game.ready(function () {
         Game.start('stars', Stars);
     });
+
+    const SERVER_URL = "http://127.0.0.1:5001/highscores/lunarlander"
 
     // This code was not in the demo. What this weird empty function does is "start this code when
     // the entire page is done loading".
@@ -64,12 +88,36 @@
 
     function fetch_scores() {
         // Try to retrieve the highscores from a server running on my own machine
-        $.get("http://127.0.0.1:8080/highscores/lunarlander", function (data) {
+        $.get(SERVER_URL, function (data) {
             set_scores(data)
         })
         .fail(function () {
             console.log("Highscore Request failed :(")
         })
+    }
+
+    // We register a new event to run a function whenever the button add_new_score is clicked
+    $("#add_new_score").on("click", function() {
+        add_score()
+    })
+
+
+    // This function sends the name and score to the server
+    function add_score() {
+        payload = {
+            "name": $("#new_name").val(),
+            "score": $("#new_score").val(),
+        }
+
+        // Take the payload, POST to the server. We need to force the contentType here, otherwise
+        // jQuery will not add the application/json header
+        $.post(
+            {
+                url:SERVER_URL,
+                data:JSON.stringify(payload),
+                contentType: 'application/json; charset=utf-8'
+            }
+        ).done(function(data){fetch_scores()})
     }
 </script>
 
