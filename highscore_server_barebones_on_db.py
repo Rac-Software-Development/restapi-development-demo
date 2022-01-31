@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, send_from_directory, jsonify, request, render_template
 
 app = Flask(__name__, static_url_path="/", static_folder="www")
 
@@ -61,6 +61,13 @@ def handle_highscores(game):
 @app.route("/")
 def hello_from_the_other_side():
     return send_from_directory("www", "highscore_jquery.html")
+
+@app.route("/jinja/<game>")
+def hello_from_jinja(game):
+    params = {
+        "name": game
+    }
+    return render_template("highscore_jquery.j2", **params)
 
 
 highscores = HighScores("scores.db")
