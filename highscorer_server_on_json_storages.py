@@ -9,6 +9,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 api = Api(app)
 
+# Moeilijke code om actie scherm toe te voegen
+
 """
     Highscore data looks like:
     {
