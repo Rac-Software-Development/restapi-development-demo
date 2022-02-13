@@ -8,6 +8,7 @@ app = Flask(__name__, static_url_path="/", static_folder="www")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///scores2.db'
 db = SQLAlchemy(app)
 
+# moeilijke wijziging in main branch
 
 def result_to_dict(sql_result):
     result_dict = []
