@@ -1,6 +1,7 @@
 import sqlite3
 
 from flask import Flask, send_from_directory, jsonify, request, render_template
+from flask_cors import CORS
 
 app = Flask(__name__, static_url_path="/", static_folder="www")
 
@@ -13,7 +14,7 @@ class HighScores:
         conn = sqlite3.connect(self.database_file_name)
         cur = conn.cursor()
         sql = "CREATE TABLE IF NOT EXISTS highscores " \
-              "(name TEXT NOT NULL, score TEXT NOT NULL, game TEXT NOT NULL)"
+              "(name TEXT NOT NULL, score INTEGER NOT NULL, game TEXT NOT NULL)"
         cur.execute(sql)
         conn.commit()
 
@@ -69,6 +70,8 @@ def hello_from_jinja(game):
     }
     return render_template("highscore_jquery.j2", **params)
 
-
+# MarkO: This is required for clients running on different protocol/DNS/port numbers.
+# I have a presentation on CORS ready if you need to know more.
+CORS(app)
 highscores = HighScores("scores.db")
 app.run(debug=True, host="127.0.0.1", port=5001)

@@ -1,0 +1,12 @@
+.App {
+  font-family: monospace, 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono';
+  color: white;
+  font-size: 4em;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+#container canvas, .App {
+  position: absolute;
+}
