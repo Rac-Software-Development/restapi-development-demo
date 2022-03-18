@@ -6,8 +6,9 @@ This RESTful server app has a few components to play with:
 - A simple [client module](highscore.py) that contacts this server and can be imported in other classes. 
 - A [demo program](demo.py) importing the client and showing how to use it
 - A [demo web page](www/highscore.html) with a fancy star field showing a continually updated list of highscores 
-
-Note that you should start the server before trying to run the demo. 
+- A [ReactJS based client](react_client)
+- An incomplete [Ionic based client](react_ionic_client)
+Note that you should start the server before trying to run the demos. 
 
 # Highscore server
 
@@ -107,4 +108,29 @@ The demo page is a fancy scrolling star field (https://github.com/jakesgordon/ja
 - A Jquery based approach 
 - An ES2017-ES2020 pure javascript variant
 
-You can run this page from your web browser directly, no need for a webserver. 
+You can run this page from your web browser directly, no need for a webserver.
+
+# ReactJS Based Client
+This client is similar to the other clients in the www directory, but requires you to complete the setup and run it using NPM (Node Package Manager). If "npm" is not on your system, download and install the Node.js eocsystem from [here](https://nodejs.org/en/download/)
+
+You will need to install all of the required libraries in the ReactJS directory, which will take quite some space. From the react_client directory, do: 
+```
+npm install 
+npm start
+```
+This will start a development server you can use to view the result. 
+
+# React on Ionic based mobile client
+Similar to the ReactJS example, this client requires Node.js to be installed.
+
+To install the required Ionic libraries:
+```
+npm install -g @ionic/cli
+```
+
+Next, start this client as following:
+```
+ionic start
+```
+
+To set up the deployment for the Android emulator on Android Developer Studio, consult the [documentation](https://ionicframework.com/docs/angular/your-first-app/deploying-mobile)

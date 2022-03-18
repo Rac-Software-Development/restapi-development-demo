@@ -7,6 +7,8 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
+app.config["CORS_SEND_WILDCARD"] = True
+CORS(app)
 api = Api(app)
 
 # Moeilijke code om actie scherm toe te voegen
@@ -138,7 +140,7 @@ if len(sys.argv) > 1:
     host = args[0]
     port = int(args[1])
 else:
-    host = "127.0.0.1"
+    host = "0.0.0.0"
     port = 8080
 
 # Here we are mapping two URLs to two different objects
@@ -147,5 +149,5 @@ api.add_resource(GamesList, '/highscores')
 print(f"Adding http://{host}:{port}/highscores/<game name>")
 api.add_resource(HighScores, '/highscores/<game>')
 
-CORS(app)
+
 app.run(debug=True, host=host, port=port)

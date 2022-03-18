@@ -59,3 +59,18 @@ def hello_from_jinja(game):
 
 db.create_all()
 app.run(debug=True, host="127.0.0.1", port=5001)
+
+
+def joost_function(var1, var2):
+    pass
+
+joost_function("1", "2")
+
+mylist = ["1", "2"]
+joost_function(mylist)
+
+mydict = {
+    "var2": "2",
+     "var1": "1",
+ }
+joost_function(**mydict)

@@ -20,13 +20,17 @@ class HighScores:
 
     def get(self, game):
         conn = sqlite3.connect(self.database_file_name)
+        # MarkO: This "row_factory" has SQLite results include the column name.
+        # Without this line you would need to use number based indexing to retrieve
+        # results.
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         sql = "SELECT * FROM highscores where game = ? " \
               "ORDER BY score DESC LIMIT 10"
         result = cur.execute(sql, [game])
         scores = []
         for score in result:
-            scores.append({"name": score[0], "score": score[1]})
+            scores.append({"name": score["name"], "score": score["score"]})
         return scores
 
     def insert_score(self, name, score, game):
