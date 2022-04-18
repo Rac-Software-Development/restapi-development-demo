@@ -78,4 +78,4 @@ def hello_from_jinja(game):
 # I have a presentation on CORS ready if you need to know more.
 CORS(app)
 highscores = HighScores("scores.db")
-app.run(debug=True, host="127.0.0.1", port=5001)
+app.run(debug=True, host="0.0.0.0", port=5001)
