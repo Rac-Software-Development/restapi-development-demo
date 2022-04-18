@@ -1,12 +1,14 @@
 import sqlite3
 
 from flask import Flask, send_from_directory, jsonify, request, render_template
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__, static_url_path="/", static_folder="www")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///scores2.db'
 db = SQLAlchemy(app)
+CORS(app)
 
 # moeilijke wijziging in main branch
 

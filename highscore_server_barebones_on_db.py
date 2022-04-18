@@ -4,6 +4,7 @@ from flask import Flask, send_from_directory, jsonify, request, render_template
 from flask_cors import CORS
 
 app = Flask(__name__, static_url_path="/", static_folder="www")
+CORS(app)
 
 class HighScores:
     def __init__(self, database_file_name):
