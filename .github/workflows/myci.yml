@@ -10,12 +10,6 @@ jobs:
         with:
           python-version: '3.x'
           architecture: x64
-      - name: Install pylint_runner
-        run: pip install pylint_runner
       - name: Install requirements
         run: pip install -r requirements.txt
-      - name: Install pylint_runner
-        run: |
-          EXCEPTIONS=R0801,C0411
-          echo "Now running pylint_runner with exceptions for $EXCEPTIONS"
-          pylint_runner -d $EXCEPTIONS
+
