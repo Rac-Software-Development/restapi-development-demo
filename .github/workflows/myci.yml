@@ -12,8 +12,9 @@ jobs:
           architecture: x64
       - name: Install requirements
         run: pip install -r requirements.txt
-      - name: Install pylint_runner
+      - name: Install and run pylint_runner
         run: |
           echo "Installing pylint_runner"
           pip install pylint_runner
+          pylint_runner
 
