@@ -2,7 +2,7 @@
 A python server and client for a simple RESTful API implementation. This is demonstration code, not meant for general usage. 
 
 This RESTful server app has a few components to play with: 
-- A REST [server](highscorer_awecwe.py) that registers high scores for a given game name. 
+- A REST [server] in multiple implementations that registers high scores for a given game name. 
 - A simple [client module](highscore.py) that contacts this server and can be imported in other classes. 
 - A [demo program](demo.py) importing the client and showing how to use it
 - A [demo web page](www/highscore.html) with a fancy star field showing a continually updated list of highscores 
@@ -11,17 +11,21 @@ This RESTful server app has a few components to play with:
 Note that you should start the server before trying to run the demos. 
 
 # Highscore server
+The highscore server comes in three flavors:
+- highscorer_server_on_json_storages.py uses a json file as database medium, including some caching. 
+- highscore_server_barebones_on_db.py is a basic SQLite with SQL based implementation
+- highscore_server_barebones_on_sqlalch.py is a SQLAlchemy using SQLite implementation
 
 ## Installing
 To start the server, first make sure the requirements are installed: 
 ```
 pip install -r requirements.txt
 ```
-..then start the server
+..then start for example the SQL based server:
 ```
-python highscore_server.py
+python highscore_server_barebones_on_db.py
 ```
-(and leave the window open)
+(and leave the process running!)
 
 By default we listen on **all interfaces** (ie. 0.0.0.0) and **port 8080**. To start with a different port or a specific listener IP, add these to the start command as following:
 ```
